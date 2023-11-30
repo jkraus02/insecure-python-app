@@ -22,9 +22,11 @@ def index():
 def greet():
     name = request.form['name']
     age = request.form['age']
+    query = 'INSERT INTO user (name, age) VALUES (\'%s\', \'%s\')'
+    values = (name, age)
 
     cur = mysql.connection.cursor()
-    cur.execute('INSERT INTO user (name, age) VALUES (\'%s\', \'%s\')' % (name, age))
+    cur.execute(query, values)
     mysql.connection.commit()
     cur.execute('SELECT * FROM user')
     data = cur.fetchall()
